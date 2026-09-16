@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply antialiased; font-family: 'Plus Jakarta Sans', sans-serif; }
+}
+
+@layer components {
+  .input-field {
+    @apply bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none focus:border-teal-400 dark:focus:border-teal-500 transition-colors w-full;
+  }
+  .input-sm {
+    @apply bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none focus:border-teal-400 transition-colors w-full;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .gradient-text {
+    background: linear-gradient(135deg, #0ea5e9, #0d9488);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .glow { box-shadow: 0 0 40px -8px rgba(14, 165, 233, 0.35); }
+}
