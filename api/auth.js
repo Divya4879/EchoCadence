@@ -10,7 +10,6 @@ export async function verifyToken(req) {
   const token = auth.slice(7)
   const { payload } = await jwtVerify(token, JWKS, {
     issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-    audience: process.env.AUTH0_AUDIENCE,
   })
   return payload
 }
