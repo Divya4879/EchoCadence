@@ -4,12 +4,21 @@ import { useAuth0 } from '@auth0/auth0-react'
 import api from '../lib/api'
 import Breadcrumbs from '../components/Breadcrumbs'
 
+const ALL_LANGUAGES = [
+  'Afrikaans','Arabic','Bengali','Bulgarian','Catalan','Mandarin Chinese',
+  'Croatian','Czech','Danish','Dutch','Finnish','French','German','Greek',
+  'Hebrew','Hindi','Hungarian','Indonesian','Italian','Japanese','Korean',
+  'Latin','Malay','Norwegian','Persian (Farsi)','Polish','Portuguese',
+  'Romanian','Russian','Sanskrit','Slovak','Spanish','Swahili','Swedish',
+  'Tagalog','Thai','Turkish','Ukrainian','Urdu','Vietnamese',
+]
+
 export default function Dashboard() {
   const { user, getIdTokenClaims } = useAuth0()
   const navigate = useNavigate()
   const [languages, setLanguages] = useState([])
   const [adding, setAdding] = useState(false)
-  const [name, setName] = useState('')
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -26,13 +35,11 @@ export default function Dashboard() {
     })
   }, [])
 
-  async function addLanguage(e) {
-    e.preventDefault()
-    if (!name.trim()) return
+  async function addLanguage(name) {
     try {
-      const { data } = await api.post('/api/languages', { name: name.trim() })
+      const { data } = await api.post('/api/languages', { name })
       setLanguages(prev => [...prev, data])
-      setName(''); setAdding(false); setError('')
+      setAdding(false); setSearch(''); setError('')
     } catch (e) {
       setError(e.response?.data?.error || 'Failed to add language')
     }
@@ -74,15 +81,25 @@ export default function Dashboard() {
         </div>
 
         {adding && (
-          <form onSubmit={addLanguage} className="mb-8 p-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c1a2e] flex gap-3 items-center shadow-sm">
-            <input
-              autoFocus value={name} onChange={e => setName(e.target.value)}
-              placeholder="e.g. French, Japanese, Spanish..."
-              className="input-field flex-1"
-            />
-            <button type="submit" className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90">Add</button>
-            <button type="button" onClick={() => { setAdding(false); setName(''); setError('') }} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5">Cancel</button>
-          </form>
+          <div className="mb-8 p-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c1a2e] shadow-sm">
+            <input autoFocus value={search} onChange={e => setSearch(e.target.value)}
+              placeholder="Search languages..."
+              className="input-field w-full mb-3" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-56 overflow-y-auto">
+              {ALL_LANGUAGES
+                .filter(l => l.toLowerCase().includes(search.toLowerCase()) && !languages.find(x => x.name === l))
+                .map(l => (
+                  <button key={l} onClick={() => addLanguage(l)}
+                    className="text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-colors border border-gray-100 dark:border-white/5">
+                    {l}
+                  </button>
+                ))}
+            </div>
+            <button onClick={() => { setAdding(false); setSearch(''); setError('') }}
+              className="mt-3 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+              Cancel
+            </button>
+          </div>
         )}
         {error && <p className="text-sm text-rose-500 mb-4">{error}</p>}
 
