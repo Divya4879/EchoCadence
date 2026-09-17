@@ -62,7 +62,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             {languages.length > 0 && (
               <button onClick={() => navigate('/revise')} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
-                Revise cards →
+                Revise cards
               </button>
             )}
             {languages.length < 7 && (
@@ -107,7 +107,7 @@ export default function Dashboard() {
                   {l.name[0].toUpperCase()}
                 </div>
                 <p className="font-semibold text-gray-900 dark:text-white text-lg">{l.name}</p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Open →</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Open</p>
                 <button
                   onClick={e => { e.stopPropagation(); deleteLanguage(l.id) }}
                   className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 dark:text-gray-600 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all text-sm"

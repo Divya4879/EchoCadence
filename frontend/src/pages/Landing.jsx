@@ -59,7 +59,7 @@ export default function Landing() {
           </button>
           {isAuthenticated ? (
             <Link to="/dashboard" className="text-sm font-semibold px-4 py-2 rounded-lg bg-brand-gradient text-white hover:opacity-90 transition-opacity glow">
-              Go to dashboard →
+              Go to dashboard
             </Link>
           ) : (
             <>

@@ -48,7 +48,7 @@ export default function SetUsername({ onDone }) {
           </div>
           <button type="submit" disabled={loading || !username.trim()}
             className="w-full py-3 rounded-xl font-semibold bg-brand-gradient text-white hover:opacity-90 glow disabled:opacity-40 disabled:cursor-not-allowed transition-opacity">
-            {loading ? 'Saving...' : 'Continue →'}
+            {loading ? 'Saving...' : 'Continue'}
           </button>
         </form>
       </div>

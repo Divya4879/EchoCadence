@@ -148,7 +148,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
           )}
           <button onClick={startSession} disabled={!selectedLang || availableCount === 0}
             className="w-full py-3.5 rounded-xl font-semibold bg-brand-gradient text-white hover:opacity-90 transition-opacity glow disabled:opacity-40 disabled:cursor-not-allowed">
-            Start {isLearn ? 'learning' : 'revision'} →
+            Start {isLearn ? 'learning' : 'revision'}
           </button>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
             New session
           </button>
           <button onClick={() => navigate('/progress')} className="px-6 py-2.5 rounded-xl bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 glow">
-            View progress →
+            View progress
           </button>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
           )}
           {gotRight && (card.difficulty || rated || !isLearn) && (
             <button onClick={advanceCard} className="w-full py-3 rounded-xl bg-brand-gradient text-white font-semibold text-sm hover:opacity-90 glow">
-              Next →
+              Next
             </button>
           )}
           {!flipped && !gotRight && (
