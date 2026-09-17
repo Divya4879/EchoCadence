@@ -2,74 +2,88 @@
 
 **Vocabulary learning that actually sticks.**
 
-EchoCadence is a language learning web app built around spaced repetition — the scientifically proven method for long-term memory retention. Add vocabulary across multiple languages, learn with flashcards, and let the algorithm decide when to bring each word back.
+EchoCadence is a spaced repetition SaaS for language learners. You build your vocabulary list, study with flashcards, and the SM-2 algorithm handles the rest — scheduling each word to come back exactly when you're about to forget it.
 
-🔗 **Live:** [echocadence.vercel.app](https://echocadence.vercel.app)
+🔗 **Live:** [echocadence.vercel.app](https://echocadence.vercel.app)  
+📁 **Repo:** [github.com/Divya4879/EchoCadence](https://github.com/Divya4879/EchoCadence)
 
 ---
 
-## What it does
+## Why EchoCadence
 
-You add vocabulary. EchoCadence turns it into flashcards and schedules reviews at the right intervals — not too soon, not too late — so what you learn today is still with you months from now.
+Most vocabulary apps either dump everything on you at once or make you manually decide what to review. EchoCadence does neither. You add words, you study, and the algorithm figures out the optimal time to bring each card back — based on how hard it was for you specifically.
+
+The result: less time reviewing things you already know, more time on things you don't.
 
 ---
 
 ## Features
 
-### Languages & Vocabulary
-- Track up to **5 languages** simultaneously
-- Each language gets its own isolated workspace
-- **7 built-in categories** per language: Words & Meanings, Synonyms, Antonyms, Phrases, Slangs & Meanings, Grammar Rules, Pronunciation
-- Add up to **3 custom categories** with any two fields you define
-- Full edit and delete support for all entries
+### Vocabulary Management
+- Up to **5 languages** with fully isolated workspaces
+- **6 built-in categories** per language: Words & Meanings, Synonyms, Antonyms, Phrases, Slangs & Meanings, Grammar Rules
+- Up to **3 custom categories** — define your own field labels (e.g. Kanji / Reading, Verb / Conjugation)
+- Full CRUD on all entries — add, edit, delete
+- **Filter entries by status** directly in the vocabulary list: All, Learn (not yet studied), Revise (already rated)
+- **Inline difficulty tag editing** — change a card's Easy / Medium / Hard rating directly from the word list without going through a flashcard session
 
-### Flashcards
-- **Learn mode** — new vocabulary you haven't seen yet
-- **Revise mode** — cards due for review based on your spaced repetition schedule
-- Flip animation, "Got it / Not quite" feedback
-- Rate each card as Easy, Medium, or Hard — once, after your first correct answer
-- Missed cards get a single retry pass at the end of the session, then scheduled for later
+### Flashcard Sessions
+- **Learn mode** — only shows cards you haven't studied yet
+- **Revise mode** — only shows cards due for review today based on your schedule
+- Sessions launched directly from each language page, pre-filtered to that language
+- Flip animation with keyboard-friendly interaction
+- "Got it / Not quite" feedback per card
+- Missed cards get one retry pass at the end of the session
+- First-attempt correct answers tracked and highlighted (🥳)
+- Difficulty rated once on first correct answer in Learn mode — never asked again in Revise
 
-### Spaced Repetition
-- Powered by the **SM-2 algorithm** (the same method behind Anki)
-- Every card has its own review schedule — hard cards come back sooner, easy ones give you breathing room
-- Customizable review intervals: same-day, end-of-day, weekly, monthly
-- First-attempt correct answers tracked separately
+### Spaced Repetition (SM-2)
+- Every card has its own independent review schedule
+- Hard cards return sooner; easy cards give you longer breathing room
+- Customizable intervals: same-day, end-of-day, weekly, monthly
+- Schedule visible and editable from the Progress page
 
-### Progress
-- See all your cards filtered by difficulty: Easy, Medium, Hard, Not rated
-- Next review date shown per card
-- First-attempt success highlighted
-- Review schedule visible and editable
+### Progress & Stats
+- **Weekly summary**: words learned this week, reviews completed, total mastered vs total cards
+- Per-card view filtered by difficulty: Easy, Medium, Hard, Not rated
+- Next review date shown per card (Due now / In Xh / Tomorrow / In X days)
+- First-attempt success rate tracked
+- Only shows cards you've actually attempted — not your full unstarted list
 
-### Account
-- Sign in with email/password or Google
-- Username chosen on first login
-- Profile picture pulled from Google if available
-- Session persists across browser restarts
+### Auth & Sessions
+- Sign in with **Google** or **email/password**
+- Username set on first login
+- Profile picture from Google shown in nav
+- **15-minute inactivity logout** — session ends automatically after idle time
+- New deployments invalidate sessions — users are always on the latest version
+- Authenticated users land directly on their dashboard
 
 ---
 
-## Tech stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | React, Vite, Tailwind CSS |
-| Backend | Node.js, Express |
-| Database | TimescaleDB (Tiger Cloud) |
-| Auth | Auth0 |
+| Frontend | React 18, Vite, Tailwind CSS |
+| API | Node.js, Express (Vercel Serverless Functions) |
+| Database | TimescaleDB on Tiger Cloud (PostgreSQL) |
+| Auth | Auth0 (Google + email/password) |
 | Deployment | Vercel |
 
-The review log (`card_reviews`) is a **TimescaleDB hypertable** — time-partitioned for efficient querying at scale. A **continuous aggregate** (`daily_review_stats`) pre-computes daily review metrics per user.
+### Database architecture
+- `card_reviews` — **TimescaleDB hypertable**, time-partitioned for efficient querying at scale
+- `daily_review_stats` — **continuous aggregate** pre-computing daily review totals per user
+- `card_schedule` — per-card SM-2 state (interval, ease factor, next review date)
+- `card_attempts` — raw attempt log for first-attempt tracking
 
 ---
 
 ## Built for Global Hack Week: Data
 
-This project was built as part of [Global Hack Week: Data](https://ghw.mlh.io/) and completes two TimescaleDB challenges:
+Built as part of [Global Hack Week: Data](https://ghw.mlh.io/), completing two TimescaleDB challenges:
 
-- ✅ **Set up a Tiger Cloud service and create your first Hypertable** — `card_reviews` table is a hypertable partitioned by time
-- ✅ **Accelerate Dashboards with Continuous Aggregates** — `daily_review_stats` CAGG pre-computes hourly/daily review totals
+- ✅ **Hypertable** — `card_reviews` partitioned by time via `create_hypertable`
+- ✅ **Continuous Aggregate** — `daily_review_stats` CAGG for dashboard metrics
 
 ---
 
