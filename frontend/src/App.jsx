@@ -5,6 +5,7 @@ import AppLayout from './components/AppLayout'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import Language from './pages/Language'
+import Learn from './pages/Learn'
 import Revise from './pages/Revise'
 import Progress from './pages/Progress'
 import './App.css'
@@ -31,6 +32,7 @@ export default function App() {
       <Route element={<AppLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/language/:id" element={<Language />} />
+        <Route path="/learn" element={<Learn />} />
         <Route path="/revise" element={<Revise />} />
         <Route path="/progress" element={<Progress />} />
       </Route>

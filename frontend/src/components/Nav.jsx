@@ -22,8 +22,9 @@ export default function Nav() {
 
   const links = [
     { to: '/dashboard', label: 'Languages' },
+    { to: '/learn', label: 'Learn' },
+    { to: '/revise', label: 'Revise' },
     { to: '/progress', label: 'Progress' },
-    { to: '/revise', label: 'Learn & Revise' },
   ]
 
   return (

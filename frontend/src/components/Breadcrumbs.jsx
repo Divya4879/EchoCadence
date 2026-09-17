@@ -2,7 +2,8 @@ import { Link, useLocation, useMatches } from 'react-router-dom'
 
 const labels = {
   '/dashboard': 'Languages',
-  '/revise': 'Learn & Revise',
+  '/learn': 'Learn',
+  '/revise': 'Revise',
   '/progress': 'Progress',
 }
 
