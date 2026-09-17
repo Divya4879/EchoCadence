@@ -4,12 +4,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import Nav from './Nav'
 import SetUsername from './SetUsername'
 import api from '../lib/api'
+import useInactivityLogout from '../hooks/useInactivityLogout'
 
 export default function AppLayout() {
   const { isAuthenticated, isLoading, getAccessTokenSilently, user } = useAuth0()
   const navigate = useNavigate()
   const [appUser, setAppUser] = useState(null)
   const [synced, setSynced] = useState(false)
+  useInactivityLogout()
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) navigate('/', { replace: true })

@@ -17,7 +17,6 @@ createRoot(document.getElementById('root')).render(
       }}
       cacheLocation="localstorage"
       useRefreshTokens={true}
-      useRefreshTokensFallback={true}
     >
       <BrowserRouter>
         <ThemeProvider>
