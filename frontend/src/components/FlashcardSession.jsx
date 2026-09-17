@@ -143,7 +143,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
           </div>
           {selectedLang && availableCount === 0 && (
             <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-1">
-              {isLearn ? 'No new cards — add more vocabulary first.' : 'Nothing due for revision yet — check back later.'}
+              {isLearn ? 'No new cards - add more vocabulary first.' : 'Nothing due for revision yet - check back later.'}
             </p>
           )}
           <button onClick={startSession} disabled={!selectedLang || availableCount === 0}

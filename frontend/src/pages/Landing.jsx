@@ -21,17 +21,17 @@ const Moon = () => (
 )
 
 const features = [
-  { tag: 'Multi-language', title: 'Five languages. One workspace.', body: 'Track up to 5 languages simultaneously. Each gets its own isolated space — vocabulary, categories, and progress kept cleanly separate.' },
+  { tag: 'Multi-language', title: 'Seven languages. One workspace.', body: 'Track up to 7 languages simultaneously. Each gets its own isolated space - vocabulary, categories, and progress kept cleanly separate.' },
   { tag: 'Categories', title: 'Beyond words and meanings.', body: 'Built-in categories for vocabulary, synonyms, antonyms, common phrases, advanced phrases, and slangs. Add up to 3 custom categories with any two fields you define.' },
   { tag: 'Flashcards', title: 'Cards built from your own entries.', body: 'Every word and phrase you add becomes a reviewable flashcard. Filter by category, difficulty, or go random. Rate a card only after answering correctly.' },
-  { tag: 'Spaced Repetition', title: 'The science of not forgetting.', body: 'Powered by the SM-2 algorithm — the same method behind Anki. Hard cards resurface sooner. Easy ones give you breathing room.' },
-  { tag: 'Difficulty Tracking', title: 'Easy, medium, hard — per card.', body: "Every card carries its difficulty history. See exactly which words you've mastered, which need work, and which you've never gotten right on the first try." },
-  { tag: 'Progress', title: 'A clear picture of where you stand.', body: "Review completed cards, revisit ones you struggled with, and track retention over time. No vanity metrics — just honest progress." },
+  { tag: 'Spaced Repetition', title: 'The science of not forgetting.', body: 'Powered by the SM-2 algorithm - the same method behind Anki. Hard cards resurface sooner. Easy ones give you breathing room.' },
+  { tag: 'Difficulty Tracking', title: 'Easy, medium, hard - per card.', body: "Every card carries its difficulty history. See exactly which words you've mastered, which need work, and which you've never gotten right on the first try." },
+  { tag: 'Progress', title: 'A clear picture of where you stand.', body: "Review completed cards, revisit ones you struggled with, and track retention over time. No vanity metrics - just honest progress." },
 ]
 
 const steps = [
-  { n: '01', title: 'Add your languages', desc: "Choose up to 5 languages you're actively learning. Each gets its own dedicated space." },
-  { n: '02', title: 'Build your vocabulary', desc: 'Enter words, meanings, synonyms, antonyms, idioms, phrases — or define your own categories with custom fields.' },
+  { n: '01', title: 'Add your languages', desc: "Choose up to 7 languages you're actively learning. Each gets its own dedicated space." },
+  { n: '02', title: 'Build your vocabulary', desc: 'Enter words, meanings, synonyms, antonyms, idioms, phrases - or define your own categories with custom fields.' },
   { n: '03', title: 'Review with flashcards', desc: 'Cards are generated from your entries. Answer, then rate each one. Your rating shapes when it comes back.' },
   { n: '04', title: 'Let the algorithm work', desc: 'Spaced repetition schedules every card at the optimal interval. Show up consistently and retention compounds.' },
 ]

@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       const { rows: existing } = await pool.query(
         'SELECT id FROM languages WHERE user_id = $1', [userId]
       )
-      if (existing.length >= 5) return res.status(400).json({ error: 'Max 5 languages' })
+      if (existing.length >= 7) return res.status(400).json({ error: 'Max 7 languages' })
 
       const { rows: dupe } = await pool.query(
         'SELECT id FROM languages WHERE user_id = $1 AND LOWER(name) = $2', [userId, normalized]

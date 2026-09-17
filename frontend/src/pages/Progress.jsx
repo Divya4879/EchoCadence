@@ -118,7 +118,7 @@ export default function Progress() {
         {firstAttemptCount > 0 && (
           <div className="mb-6 p-4 rounded-2xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-700/40">
             <p className="text-sm font-semibold text-teal-800 dark:text-teal-200">
-              ✦ You nailed {firstAttemptCount} card{firstAttemptCount !== 1 ? 's' : ''} on the first try — those are locked in.
+              ✦ You nailed {firstAttemptCount} card{firstAttemptCount !== 1 ? 's' : ''} on the first try - those are locked in.
             </p>
           </div>
         )}
@@ -229,10 +229,10 @@ export default function Progress() {
                       <span className={`w-1.5 h-1.5 rounded-full ${DIFF[c.difficulty].dot}`} />
                       {c.difficulty}
                     </span>
-                  ) : <span className="text-xs text-gray-400 dark:text-gray-500">—</span>}
+                  ) : <span className="text-xs text-gray-400 dark:text-gray-500">-</span>}
                 </div>
                 <p className={`text-xs font-medium ${c.next_review && new Date(c.next_review) <= new Date() ? 'text-rose-600 dark:text-rose-400' : 'text-gray-600 dark:text-gray-300'}`}>
-                  {nextReviewLabel(c.next_review) || '—'}
+                  {nextReviewLabel(c.next_review) || '-'}
                 </p>
               </div>
             ))}

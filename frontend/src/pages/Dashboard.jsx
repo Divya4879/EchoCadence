@@ -65,7 +65,7 @@ export default function Dashboard() {
                 Revise cards →
               </button>
             )}
-            {languages.length < 5 && (
+            {languages.length < 7 && (
               <button onClick={() => setAdding(true)} className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity glow">
                 + Add language
               </button>
@@ -114,7 +114,7 @@ export default function Dashboard() {
                 >✕</button>
               </div>
             ))}
-            {languages.length < 5 && (
+            {languages.length < 7 && (
               <button onClick={() => setAdding(true)} className="p-6 rounded-2xl border border-dashed border-gray-200 dark:border-white/10 hover:border-sky-300 dark:hover:border-sky-700/40 transition-colors flex flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500 hover:text-sky-500 dark:hover:text-sky-400 min-h-[140px]">
                 <span className="text-2xl">+</span>
                 <span className="text-sm font-medium">Add language</span>
@@ -123,7 +123,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        <p className="text-xs text-gray-400 dark:text-gray-600 mt-8 text-center">{languages.length}/5 languages used</p>
+        <p className="text-xs text-gray-400 dark:text-gray-600 mt-8 text-center">{languages.length}/7 languages used</p>
       </div>
     </div>
   )
