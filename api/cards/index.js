@@ -15,7 +15,14 @@ export default async function handler(req, res) {
     const userId = payload.sub
 
     if (req.method === 'GET') {
-      const { languageId, limit = 200, all } = req.query
+      const { languageId, limit = 200, all, mode } = req.query
+
+      let modeFilter = ''
+      if (all === 'true') modeFilter = ''
+      else if (mode === 'learn') modeFilter = 'AND c.difficulty IS NULL'
+      else if (mode === 'revise') modeFilter = 'AND c.difficulty IS NOT NULL AND cs.next_review <= NOW()'
+      else modeFilter = 'AND (cs.next_review IS NULL OR cs.next_review <= NOW())'
+
       const { rows } = await pool.query(`
         SELECT c.id, c.difficulty, c.difficulty_set_at,
                e.field1, e.field2,
@@ -32,8 +39,7 @@ export default async function handler(req, res) {
         JOIN categories cat ON cat.id = e.category_id
         JOIN languages l ON l.id = cat.language_id
         LEFT JOIN card_schedule cs ON cs.card_id = c.id
-        WHERE c.user_id = $1 AND l.id = $2
-          ${all ? '' : 'AND (cs.next_review IS NULL OR cs.next_review <= NOW())'}
+        WHERE c.user_id = $1 AND l.id = $2 ${modeFilter}
         ORDER BY COALESCE(cs.next_review, NOW()) ASC
         LIMIT $3
       `, [userId, languageId, parseInt(limit)])
