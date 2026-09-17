@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL,
+  username TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
