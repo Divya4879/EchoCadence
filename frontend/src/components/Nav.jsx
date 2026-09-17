@@ -31,7 +31,7 @@ export default function Nav() {
     <header className="fixed top-0 inset-x-0 z-50 h-[72px] flex items-center justify-between px-6 md:px-10 backdrop-blur-xl bg-white/90 dark:bg-[#070f1c]/90 border-b border-gray-200 dark:border-white/[0.09]">
       <div className="flex items-center gap-6">
         <Link to="/dashboard" className="flex items-center gap-3">
-          <img src="/favicon.svg" width={52} height={52} alt="EchoCadence" style={{ borderRadius: '11px', display: 'block' }} />
+          <img src="/favicon.svg" width={52} height={52} alt="EchoCadence" style={{ display: 'block' }} />
           <span className="text-[20px] font-bold tracking-tight text-gray-900 dark:text-white">
             Echo<span className="gradient-text">Cadence</span>
           </span>

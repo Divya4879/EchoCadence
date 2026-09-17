@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
 const Logo = ({ size = 40 }) => (
-  <img src="/favicon.svg" width={size} height={size} alt="EchoCadence" style={{ borderRadius: '10px', display: 'block' }} />
+  <img src="/favicon.svg" width={size} height={size} alt="EchoCadence" style={{ display: 'block' }} />
 )
 
 const Sun = () => (
