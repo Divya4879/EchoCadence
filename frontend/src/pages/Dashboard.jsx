@@ -19,7 +19,6 @@ export default function Dashboard() {
       localStorage.setItem('ec_token', token)
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
       try {
-        await api.post('/api/users/sync', { email: user.email })
         const r = await api.get('/api/languages')
         setLanguages(r.data)
       } catch (e) {

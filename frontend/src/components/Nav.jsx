@@ -15,8 +15,8 @@ const Moon = () => (
   </svg>
 )
 
-export default function Nav() {
-  const { logout, user } = useAuth0()
+export default function Nav({ username, picture, email }) {
+  const { logout } = useAuth0()
   const { pathname } = useLocation()
   const { dark, toggle } = useTheme()
 
@@ -56,10 +56,12 @@ export default function Nav() {
           {dark ? <Sun /> : <Moon />}
         </button>
         <div className="hidden sm:flex items-center gap-2.5">
-          {user?.picture && (
-            <img src={user.picture} alt="" className="w-8 h-8 rounded-full object-cover ring-2 ring-gray-200 dark:ring-white/15" />
+          {picture && (
+            <img src={picture} alt="" className="w-8 h-8 rounded-full object-cover ring-2 ring-gray-200 dark:ring-white/15" />
           )}
-          <span className="text-sm font-medium text-gray-800 dark:text-gray-100 max-w-[180px] truncate">{user?.email}</span>
+          <span className="text-sm font-medium text-gray-800 dark:text-gray-100 max-w-[180px] truncate">
+            {username || email}
+          </span>
         </div>
         <button
           onClick={() => { localStorage.removeItem('ec_token'); logout({ logoutParams: { returnTo: window.location.origin } }) }}
