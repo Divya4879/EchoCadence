@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 
 const Logo = ({ size = 40 }) => (
@@ -38,6 +39,11 @@ const steps = [
 export default function Landing() {
   const { loginWithRedirect, isAuthenticated } = useAuth0()
   const { dark, toggle } = useTheme()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/dashboard', { replace: true })
+  }, [isAuthenticated])
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#070f1c] text-gray-900 dark:text-gray-100 transition-colors duration-300">
