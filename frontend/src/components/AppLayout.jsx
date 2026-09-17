@@ -7,7 +7,7 @@ import api from '../lib/api'
 import useInactivityLogout from '../hooks/useInactivityLogout'
 
 export default function AppLayout() {
-  const { isAuthenticated, isLoading, getAccessTokenSilently, user } = useAuth0()
+  const { isAuthenticated, isLoading, getIdTokenClaims, user } = useAuth0()
   const navigate = useNavigate()
   const [appUser, setAppUser] = useState(null)
   const [synced, setSynced] = useState(false)
@@ -19,7 +19,8 @@ export default function AppLayout() {
 
   useEffect(() => {
     if (!isAuthenticated) return
-    getAccessTokenSilently().then(async token => {
+    getIdTokenClaims().then(async claims => {
+      const token = claims.__raw
       localStorage.setItem('ec_token', token)
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
       const { data } = await api.post('/api/users/sync', { email: user?.email })

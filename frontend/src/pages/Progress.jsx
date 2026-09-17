@@ -26,7 +26,7 @@ function nextReviewLabel(nextReview) {
 const DEFAULT_SR = { same_day_hours: 4, end_of_day_hours: 12, week_days: 7, month_days: 30 }
 
 export default function Progress() {
-  const { getAccessTokenSilently } = useAuth0()
+  const { getIdTokenClaims } = useAuth0()
   const [languages, setLanguages] = useState([])
   const [selectedLang, setSelectedLang] = useState(null)
   const [cards, setCards] = useState([])
@@ -38,8 +38,8 @@ export default function Progress() {
   const [weekStats, setWeekStats] = useState(null)
 
   useEffect(() => {
-    getAccessTokenSilently().then(token => {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    getIdTokenClaims().then(claims => {
+      api.defaults.headers.common['Authorization'] = `Bearer ${claims.__raw}`
       api.get('/api/languages').then(r => {
         setLanguages(r.data)
         if (r.data.length) setSelectedLang(r.data[0].id)
