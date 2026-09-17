@@ -27,14 +27,22 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
       const { name } = req.body
+      const normalized = name.trim().toLowerCase()
+      const display = normalized.charAt(0).toUpperCase() + normalized.slice(1)
+
       const { rows: existing } = await pool.query(
         'SELECT id FROM languages WHERE user_id = $1', [userId]
       )
       if (existing.length >= 5) return res.status(400).json({ error: 'Max 5 languages' })
 
+      const { rows: dupe } = await pool.query(
+        'SELECT id FROM languages WHERE user_id = $1 AND LOWER(name) = $2', [userId, normalized]
+      )
+      if (dupe.length) return res.status(400).json({ error: `You already have ${display} added` })
+
       const { rows } = await pool.query(
         'INSERT INTO languages (user_id, name) VALUES ($1, $2) RETURNING *',
-        [userId, name]
+        [userId, display]
       )
       const langId = rows[0].id
 
