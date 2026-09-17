@@ -64,7 +64,7 @@ export default function Landing() {
           ) : (
             <>
               <button onClick={() => loginWithRedirect()} className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors px-3 py-1.5">Sign in</button>
-              <button onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })} className="text-sm font-semibold px-4 py-2 rounded-lg bg-brand-gradient text-white hover:opacity-90 transition-opacity glow">Get started free</button>
+              <button onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })} className="text-sm font-semibold px-4 py-2 rounded-lg bg-brand-gradient text-white hover:opacity-90 transition-opacity glow">Get started for free</button>
             </>
           )}
         </div>
@@ -172,7 +172,7 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
             <div className="flex items-center gap-3 mb-3"><Logo size={60} /><span className="text-[22px] font-bold text-gray-900 dark:text-white">Echo<span className="gradient-text">Cadence</span></span></div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xs leading-relaxed">Vocabulary learning built on the science of spaced repetition. Remember more, forget less.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xs leading-relaxed">Vocabulary enhancement built on the science of spaced repetition. Remember more, forget less.</p>
           </div>
           <div className="flex flex-col items-start md:items-end gap-2">
             <div className="flex items-center gap-5 text-sm text-gray-600 dark:text-gray-400">
