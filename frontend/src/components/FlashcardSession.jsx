@@ -13,11 +13,11 @@ const RIGHT_MESSAGES = ["Locked in.", "That's the one.", "Clean.", "Solid memory
 const RETRY_MESSAGES = ["One more look.", "Almost there.", "You've got this."]
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)] }
 
-export default function FlashcardSession({ mode }) {
+export default function FlashcardSession({ mode, languageId: propLangId }) {
   const navigate = useNavigate()
   const isLearn = mode === 'learn'
   const [languages, setLanguages] = useState([])
-  const [selectedLang, setSelectedLang] = useState(null)
+  const [selectedLang, setSelectedLang] = useState(propLangId || null)
   const [sessionSize, setSessionSize] = useState(10)
   const [availableCount, setAvailableCount] = useState(0)
   const [queue, setQueue] = useState([])
@@ -33,13 +33,15 @@ export default function FlashcardSession({ mode }) {
   const [stage, setStage] = useState('setup')
 
   useEffect(() => {
-    api.get('/api/languages').then(r => setLanguages(r.data))
+    if (!propLangId) api.get('/api/languages').then(r => setLanguages(r.data))
   }, [])
 
   useEffect(() => {
     if (!selectedLang) return
     api.get(`/api/cards?languageId=${selectedLang}&limit=200&mode=${mode}`).then(r => {
-      setAvailableCount((r.data.cards || r.data).length)
+      const count = (r.data.cards || r.data).length
+      setAvailableCount(count)
+      if (propLangId) setSessionSize(Math.min(10, count))
     })
   }, [selectedLang, mode])
 

@@ -15,7 +15,22 @@ export default async function handler(req, res) {
     const userId = payload.sub
 
     if (req.method === 'GET') {
-      const { languageId, limit = 200, all, mode } = req.query
+      const { languageId, limit = 200, all, mode, stats } = req.query
+
+      // Weekly summary stats
+      if (stats === 'true') {
+        const { rows } = await pool.query(`
+          SELECT
+            COUNT(*) FILTER (WHERE cr.time >= NOW() - INTERVAL '7 days') AS reviews_this_week,
+            COUNT(DISTINCT c.id) FILTER (WHERE c.difficulty IS NOT NULL AND c.difficulty_set_at >= NOW() - INTERVAL '7 days') AS learned_this_week,
+            COUNT(DISTINCT c.id) FILTER (WHERE c.difficulty IS NOT NULL) AS total_learned,
+            COUNT(DISTINCT c.id) AS total_cards
+          FROM cards c
+          LEFT JOIN card_reviews cr ON cr.card_id = c.id AND cr.user_id = $1
+          WHERE c.user_id = $1
+        `, [userId])
+        return res.status(200).json(rows[0])
+      }
 
       let modeFilter = ''
       if (all === 'true') modeFilter = ''

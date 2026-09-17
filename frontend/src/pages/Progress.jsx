@@ -35,6 +35,7 @@ export default function Progress() {
   const [sr, setSr] = useState(DEFAULT_SR)
   const [editSr, setEditSr] = useState(false)
   const [srDraft, setSrDraft] = useState(DEFAULT_SR)
+  const [weekStats, setWeekStats] = useState(null)
 
   useEffect(() => {
     getAccessTokenSilently().then(token => {
@@ -43,6 +44,7 @@ export default function Progress() {
         setLanguages(r.data)
         if (r.data.length) setSelectedLang(r.data[0].id)
       })
+      api.get('/api/cards?stats=true').then(r => setWeekStats(r.data))
     })
   }, [])
 
@@ -94,6 +96,22 @@ export default function Progress() {
             </div>
           )}
         </div>
+
+        {/* Weekly summary */}
+        {weekStats && (
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {[
+              { value: weekStats.learned_this_week, label: 'Learned this week' },
+              { value: weekStats.reviews_this_week, label: 'Reviews this week' },
+              { value: `${weekStats.total_learned} / ${weekStats.total_cards}`, label: 'Total mastered' },
+            ].map(({ value, label }) => (
+              <div key={label} className="p-4 rounded-2xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-[#0c1a2e]/60 text-center">
+                <p className="text-2xl font-bold gradient-text">{value}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">{label}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* First-attempt highlight */}
         {firstAttemptCount > 0 && (

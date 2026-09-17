@@ -22,8 +22,6 @@ export default function Nav({ username, picture, email }) {
 
   const links = [
     { to: '/dashboard', label: 'Languages' },
-    { to: '/learn', label: 'Learn' },
-    { to: '/revise', label: 'Revise' },
     { to: '/progress', label: 'Progress' },
   ]
 

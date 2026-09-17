@@ -88,10 +88,10 @@ export default function Language() {
         <div className="flex items-center justify-between mb-6">
           <Breadcrumbs extra={langName || 'Language'} />
           <div className="flex gap-2">
-            <button onClick={() => navigate('/learn')} className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 glow">
+            <button onClick={() => navigate(`/learn?languageId=${id}`)} className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 glow">
               Learn →
             </button>
-            <button onClick={() => navigate('/revise')} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            <button onClick={() => navigate(`/revise?languageId=${id}`)} className="px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
               Revise →
             </button>
           </div>
