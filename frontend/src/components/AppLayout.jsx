@@ -20,9 +20,7 @@ export default function AppLayout() {
   useEffect(() => {
     if (!isAuthenticated) return
     getIdTokenClaims().then(async claims => {
-      const token = claims.__raw
-      localStorage.setItem('ec_token', token)
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${claims.__raw}`
       const { data } = await api.post('/api/users/sync', { email: user?.email })
       setAppUser(data)
       setSynced(true)

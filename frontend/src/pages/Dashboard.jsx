@@ -5,7 +5,7 @@ import api from '../lib/api'
 import Breadcrumbs from '../components/Breadcrumbs'
 
 export default function Dashboard() {
-  const { user, getAccessTokenSilently } = useAuth0()
+  const { user, getIdTokenClaims } = useAuth0()
   const navigate = useNavigate()
   const [languages, setLanguages] = useState([])
   const [adding, setAdding] = useState(false)
@@ -14,9 +14,8 @@ export default function Dashboard() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getAccessTokenSilently().then(async token => {
-      localStorage.setItem('ec_token', token)
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    getIdTokenClaims().then(async claims => {
+      api.defaults.headers.common['Authorization'] = `Bearer ${claims.__raw}`
       try {
         const r = await api.get('/api/languages')
         setLanguages(r.data)
