@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
+import ErrorBoundary from './components/ErrorBoundary'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import Language from './pages/Language'
@@ -22,11 +23,11 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route element={<AppLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/language/:id" element={<Language />} />
-        <Route path="/learn" element={<Learn />} />
-        <Route path="/revise" element={<Revise />} />
-        <Route path="/progress" element={<Progress />} />
+        <Route path="/dashboard" element={<ErrorBoundary><Dashboard /></ErrorBoundary>} />
+        <Route path="/language/:id" element={<ErrorBoundary><Language /></ErrorBoundary>} />
+        <Route path="/learn" element={<ErrorBoundary><Learn /></ErrorBoundary>} />
+        <Route path="/revise" element={<ErrorBoundary><Revise /></ErrorBoundary>} />
+        <Route path="/progress" element={<ErrorBoundary><Progress /></ErrorBoundary>} />
       </Route>
       <Route path="*" element={<Navigate to={isAuthenticated ? '/dashboard' : '/'} />} />
     </Routes>
