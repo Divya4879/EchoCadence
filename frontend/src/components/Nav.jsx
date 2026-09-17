@@ -62,7 +62,7 @@ export default function Nav() {
         </div>
         <button
           onClick={() => { localStorage.removeItem('ec_token'); logout({ logoutParams: { returnTo: window.location.origin } }) }}
-          className="text-sm font-semibold px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/15 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/8 transition-colors"
+          className="text-sm font-semibold px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/20 text-gray-700 dark:text-white bg-transparent hover:bg-gray-100 dark:hover:bg-white/15 transition-colors"
         >
           Sign out
         </button>
