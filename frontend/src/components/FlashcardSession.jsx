@@ -229,7 +229,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
               </button>
             </div>
           )}
-          {gotRight && !rated && (!card.difficulty || !isLearn) && (
+          {gotRight && !rated && isLearn && !card.difficulty && (
             <div className="space-y-2">
               <p className="text-center text-sm font-medium text-gray-600 dark:text-gray-300">How hard was this?</p>
               <div className="flex gap-2">
@@ -242,7 +242,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
               </div>
             </div>
           )}
-          {gotRight && (card.difficulty || rated) && (
+          {gotRight && (card.difficulty || rated || !isLearn) && (
             <button onClick={advanceCard} className="w-full py-3 rounded-xl bg-brand-gradient text-white font-semibold text-sm hover:opacity-90 glow">
               Next →
             </button>

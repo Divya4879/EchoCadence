@@ -3,6 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import api from '../lib/api'
 import Breadcrumbs from '../components/Breadcrumbs'
 
+const DIFF = {
+  easy:   { bg: 'bg-teal-100 dark:bg-teal-900/30', text: 'text-teal-700 dark:text-teal-300' },
+  medium: { bg: 'bg-sky-100 dark:bg-sky-900/30',   text: 'text-sky-700 dark:text-sky-300'   },
+  hard:   { bg: 'bg-rose-100 dark:bg-rose-900/30', text: 'text-rose-700 dark:text-rose-300' },
+}
+
 export default function Language() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -18,6 +24,7 @@ export default function Language() {
   const [addingCat, setAddingCat] = useState(false)
   const [catName, setCatName] = useState(''); const [catF1, setCatF1] = useState(''); const [catF2, setCatF2] = useState('')
   const [catError, setCatError] = useState('')
+  const [viewFilter, setViewFilter] = useState('all') // all | learn | revise
 
   useEffect(() => {
     api.get(`/api/categories?languageId=${id}`).then(r => {
@@ -55,6 +62,15 @@ export default function Language() {
     await api.delete(`/api/entries?id=${entryId}`)
     setEntries(prev => prev.filter(en => en.id !== entryId))
   }
+
+  async function updateDifficulty(entry, difficulty) {
+    await api.patch(`/api/entries?id=${entry.card_id}`, { difficulty })
+    setEntries(prev => prev.map(en => en.id === entry.id ? { ...en, difficulty } : en))
+  }
+
+  const filteredEntries = viewFilter === 'learn' ? entries.filter(e => !e.difficulty)
+    : viewFilter === 'revise' ? entries.filter(e => e.difficulty)
+    : entries
 
   async function addCustomCategory(e) {
     e.preventDefault()
@@ -144,11 +160,21 @@ export default function Language() {
                     <h2 className="font-semibold text-gray-900 dark:text-white text-lg">{activeCategory.name}</h2>
                     <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
                   </div>
-                  {!addingEntry && (
-                    <button onClick={() => setAddingEntry(true)} className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-                      + Add entry
-                    </button>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <div className="flex rounded-lg border border-gray-200 dark:border-white/10 overflow-hidden text-xs font-semibold">
+                      {[['all','All'],['learn','Learn'],['revise','Revise']].map(([v,l]) => (
+                        <button key={v} onClick={() => setViewFilter(v)}
+                          className={`px-3 py-1.5 transition-colors ${viewFilter === v ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5'}`}>
+                          {l}
+                        </button>
+                      ))}
+                    </div>
+                    {!addingEntry && (
+                      <button onClick={() => setAddingEntry(true)} className="px-4 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                        + Add entry
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {addingEntry && (
@@ -161,18 +187,19 @@ export default function Language() {
                 )}
 
                 <div className="rounded-2xl border border-gray-200 dark:border-white/[0.08] overflow-hidden bg-white dark:bg-[#0c1a2e]/40 shadow-sm">
-                  <div className="grid grid-cols-2 px-5 py-3 bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.08]">
+                  <div className="grid grid-cols-[1fr_1fr_auto] px-5 py-3 bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.08]">
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">{activeCategory.field1_label}</p>
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">{activeCategory.field2_label}</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Tag</p>
                   </div>
-                  {entries.length === 0 ? (
+                  {filteredEntries.length === 0 ? (
                     <div className="px-5 py-12 text-center text-sm text-gray-400 dark:text-gray-500">
-                      No entries yet. Add your first one above.
+                      {viewFilter === 'all' ? 'No entries yet. Add your first one above.' : `No ${viewFilter} entries.`}
                     </div>
-                  ) : entries.map(en => (
-                    <div key={en.id} className="group grid grid-cols-2 px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.05] last:border-0 hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                  ) : filteredEntries.map(en => (
+                    <div key={en.id} className="group grid grid-cols-[1fr_1fr_auto] px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.05] last:border-0 hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors items-center gap-3">
                       {editingEntry?.id === en.id ? (
-                        <form onSubmit={saveEdit} className="col-span-2 flex gap-3 items-center">
+                        <form onSubmit={saveEdit} className="col-span-3 flex gap-3 items-center">
                           <input value={ef1} onChange={e => setEf1(e.target.value)} className="input-field flex-1" />
                           <input value={ef2} onChange={e => setEf2(e.target.value)} className="input-field flex-1" />
                           <button type="submit" className="px-3 py-1.5 rounded-lg bg-brand-gradient text-white text-xs font-semibold">Save</button>
@@ -180,13 +207,25 @@ export default function Language() {
                         </form>
                       ) : (
                         <>
-                          <p className="text-sm text-gray-900 dark:text-white font-medium self-center">{en.field1}</p>
+                          <p className="text-sm text-gray-900 dark:text-white font-medium">{en.field1}</p>
                           <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-500 dark:text-gray-400">{en.field2}</p>
                             <div className="opacity-0 group-hover:opacity-100 flex gap-1 transition-opacity">
                               <button onClick={() => { setEditingEntry(en); setEf1(en.field1); setEf2(en.field2) }} className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition-colors text-xs">✎</button>
                               <button onClick={() => deleteEntry(en.id)} className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors text-xs">✕</button>
                             </div>
+                          </div>
+                          <div className="flex gap-1">
+                            {en.difficulty ? (
+                              ['easy','medium','hard'].map(d => (
+                                <button key={d} onClick={() => updateDifficulty(en, d === en.difficulty ? null : d)}
+                                  className={`px-2 py-0.5 rounded-md text-xs font-semibold capitalize transition-all ${d === en.difficulty ? `${DIFF[d].bg} ${DIFF[d].text}` : 'text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400'}`}>
+                                  {d}
+                                </button>
+                              ))
+                            ) : (
+                              <span className="text-xs text-gray-300 dark:text-gray-600 italic">not tried</span>
+                            )}
                           </div>
                         </>
                       )}

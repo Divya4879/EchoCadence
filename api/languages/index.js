@@ -9,7 +9,6 @@ const BUILTIN = [
   { name: 'Phrases',           field1_label: 'Phrase',  field2_label: 'Meaning'  },
   { name: 'Slangs & Meanings', field1_label: 'Slang',   field2_label: 'Meaning'  },
   { name: 'Grammar Rules',     field1_label: 'Rule',    field2_label: 'Example'  },
-  { name: 'Pronunciation',     field1_label: 'Word',    field2_label: 'Phonetic' },
 ]
 
 export default async function handler(req, res) {

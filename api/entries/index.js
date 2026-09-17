@@ -10,8 +10,11 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
       const { rows } = await pool.query(
-        'SELECT * FROM entries WHERE category_id = $1 ORDER BY created_at DESC',
-        [categoryId]
+        `SELECT e.*, c.id AS card_id, c.difficulty
+         FROM entries e
+         LEFT JOIN cards c ON c.entry_id = e.id AND c.user_id = $2
+         WHERE e.category_id = $1 ORDER BY e.created_at DESC`,
+        [categoryId, userId]
       )
       return res.status(200).json(rows)
     }
@@ -37,6 +40,15 @@ export default async function handler(req, res) {
         [field1, field2, id]
       )
       return res.status(200).json(rows[0])
+    }
+
+    if (req.method === 'PATCH') {
+      const { difficulty } = req.body
+      await pool.query(
+        `UPDATE cards SET difficulty=$1, difficulty_set_at=NOW() WHERE id=$2 AND user_id=$3`,
+        [difficulty || null, id, userId]
+      )
+      return res.status(200).json({ ok: true })
     }
 
     if (req.method === 'DELETE') {
