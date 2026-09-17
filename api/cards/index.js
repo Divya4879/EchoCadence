@@ -67,7 +67,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { cardId, correct, attemptNumber, rating } = req.body
+      const { cardId, correct, attemptNumber, rating, forceRating } = req.body
 
       await pool.query(
         `INSERT INTO card_attempts (card_id, user_id, attempt_number, correct) VALUES ($1,$2,$3,$4)`,
@@ -79,10 +79,17 @@ export default async function handler(req, res) {
       )
 
       if (correct && rating) {
-        await pool.query(
-          `UPDATE cards SET difficulty=$1, difficulty_set_at=NOW() WHERE id=$2 AND difficulty IS NULL`,
-          [rating, cardId]
-        )
+        if (forceRating) {
+          await pool.query(
+            `UPDATE cards SET difficulty=$1, difficulty_set_at=NOW() WHERE id=$2`,
+            [rating, cardId]
+          )
+        } else {
+          await pool.query(
+            `UPDATE cards SET difficulty=$1, difficulty_set_at=NOW() WHERE id=$2 AND difficulty IS NULL`,
+            [rating, cardId]
+          )
+        }
         const { rows: ex } = await pool.query('SELECT * FROM card_schedule WHERE card_id=$1', [cardId])
         if (!ex.length) {
           const { easeFactor, intervalDays } = sm2(2.5, 1, rating)

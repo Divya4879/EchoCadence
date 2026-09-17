@@ -63,18 +63,19 @@ export default function Progress() {
     setSr(srDraft); setEditSr(false)
   }
 
+  const attempted = cards.filter(c => parseInt(c.review_count) > 0 || parseInt(c.first_attempt_correct) > 0)
   const counts = {
-    all:    cards.length,
-    easy:   cards.filter(c => c.difficulty === 'easy').length,
-    medium: cards.filter(c => c.difficulty === 'medium').length,
-    hard:   cards.filter(c => c.difficulty === 'hard').length,
-    unseen: cards.filter(c => !c.difficulty).length,
+    all:    attempted.length,
+    easy:   attempted.filter(c => c.difficulty === 'easy').length,
+    medium: attempted.filter(c => c.difficulty === 'medium').length,
+    hard:   attempted.filter(c => c.difficulty === 'hard').length,
+    unseen: attempted.filter(c => !c.difficulty).length,
   }
-  const firstAttemptCount = cards.filter(c => parseInt(c.first_attempt_correct) > 0).length
+  const firstAttemptCount = attempted.filter(c => parseInt(c.first_attempt_correct) > 0).length
 
-  const filtered = filter === 'all' ? cards
-    : filter === 'unseen' ? cards.filter(c => !c.difficulty)
-    : cards.filter(c => c.difficulty === filter)
+  const filtered = filter === 'all' ? attempted
+    : filter === 'unseen' ? attempted.filter(c => !c.difficulty)
+    : attempted.filter(c => c.difficulty === filter)
 
   return (
     <div className="min-h-[calc(100vh-72px)] bg-[#f8fafc] dark:bg-[#070f1c] px-6 md:px-10 py-12">

@@ -76,7 +76,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
 
   async function rateDifficulty(rating) {
     const card = queue[idx]
-    await api.post('/api/cards', { cardId: card.id, correct: true, attemptNumber: isFirstAttempt ? 1 : 2, rating })
+    await api.post('/api/cards', { cardId: card.id, correct: true, attemptNumber: isFirstAttempt ? 1 : 2, rating, forceRating: !isLearn })
     setRated(true)
     setTimeout(() => advanceCard(), 400)
   }
@@ -229,7 +229,7 @@ export default function FlashcardSession({ mode, languageId: propLangId }) {
               </button>
             </div>
           )}
-          {gotRight && !rated && !card.difficulty && (
+          {gotRight && !rated && (!card.difficulty || !isLearn) && (
             <div className="space-y-2">
               <p className="text-center text-sm font-medium text-gray-600 dark:text-gray-300">How hard was this?</p>
               <div className="flex gap-2">
