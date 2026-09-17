@@ -5,7 +5,7 @@ import api from '../lib/api'
 import Breadcrumbs from '../components/Breadcrumbs'
 
 export default function Dashboard() {
-  const { user, getIdTokenClaims } = useAuth0()
+  const { user, getAccessTokenSilently } = useAuth0()
   const navigate = useNavigate()
   const [languages, setLanguages] = useState([])
   const [adding, setAdding] = useState(false)
@@ -14,8 +14,7 @@ export default function Dashboard() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    getIdTokenClaims().then(async claims => {
-      const token = claims.__raw
+    getAccessTokenSilently().then(async token => {
       localStorage.setItem('ec_token', token)
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
       try {
