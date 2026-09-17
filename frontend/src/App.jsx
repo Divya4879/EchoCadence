@@ -1,6 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
@@ -12,13 +11,6 @@ import './App.css'
 
 export default function App() {
   const { isAuthenticated, isLoading } = useAuth0()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated && window.location.pathname === '/') {
-      navigate('/dashboard', { replace: true })
-    }
-  }, [isAuthenticated, isLoading])
 
   if (isLoading) return (
     <div className="min-h-screen bg-white dark:bg-[#070f1c] flex items-center justify-center">
