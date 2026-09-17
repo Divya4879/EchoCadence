@@ -6,7 +6,10 @@ EchoCadence is a spaced repetition flashcard-based product for language learners
 
 🔗 **Check it out here:** [echocadence.vercel.app](https://echocadence.vercel.app) 
 
-![Landing page screenshot](image-1.png)
+
+<img width="1887" height="924" alt="image" src="https://github.com/user-attachments/assets/4242c8bb-07a7-4afc-b5e9-8684cb30b9e8" />
+
+
 
 📁 **Repo:** [github.com/Divya4879/EchoCadence](https://github.com/Divya4879/EchoCadence)
 
