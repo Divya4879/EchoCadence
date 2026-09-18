@@ -155,10 +155,6 @@ export default function Landing() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full blur-[100px] bg-gradient-to-br from-sky-400/10 to-teal-400/10 dark:from-sky-500/20 dark:to-teal-500/20" />
         </div>
         <div className="w-full max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-200 dark:border-teal-700/50 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300 text-xs font-semibold mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-            Free to use. No credit card needed.
-          </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-medium leading-[1.15] tracking-tight text-gray-900 dark:text-white">
             Stop looking up the same words twice.
           </h1>
