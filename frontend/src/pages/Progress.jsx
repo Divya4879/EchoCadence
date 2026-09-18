@@ -81,7 +81,7 @@ export default function Progress() {
     <div className="min-h-[calc(100vh-72px)] bg-[#f8fafc] dark:bg-[#070f1c] px-6 md:px-10 py-12">
       <div className="max-w-4xl mx-auto">
         <Breadcrumbs />
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 mb-2">Your stats</p>
             <h1 className="text-3xl font-serif font-medium text-gray-900 dark:text-white">Progress</h1>
@@ -209,31 +209,56 @@ export default function Progress() {
           </div>
         ) : (
           <div className="rounded-2xl border border-gray-200 dark:border-white/[0.08] overflow-hidden bg-white dark:bg-[#0c1a2e]/40">
-            <div className="grid grid-cols-4 px-5 py-3 bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.08]">
+            <div className="hidden sm:grid grid-cols-4 px-5 py-3 bg-gray-50 dark:bg-white/[0.03] border-b border-gray-200 dark:border-white/[0.08]">
               {['Term', 'Answer', 'Difficulty', 'Next review'].map(h => (
                 <p key={h} className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">{h}</p>
               ))}
             </div>
             {filtered.map(c => (
-              <div key={c.id} className="grid grid-cols-4 px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.05] last:border-0 hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors items-center">
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate pr-3">{c.field1}</p>
+              <div key={c.id} className="px-4 sm:px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.05] last:border-0 hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                {/* Mobile layout */}
+                <div className="sm:hidden">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{c.field1}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{c.field2}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                      {c.difficulty ? (
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold capitalize ${DIFF[c.difficulty].bg} ${DIFF[c.difficulty].text}`}>
+                          {c.difficulty}
+                        </span>
+                      ) : <span className="text-xs text-gray-400">-</span>}
+                      <p className={`text-xs font-medium ${c.next_review && new Date(c.next_review) <= new Date() ? 'text-rose-500' : 'text-gray-400 dark:text-gray-500'}`}>
+                        {nextReviewLabel(c.next_review) || '-'}
+                      </p>
+                    </div>
+                  </div>
                   {parseInt(c.first_attempt_correct) > 0 && (
-                    <p className="text-[10px] text-teal-600 dark:text-teal-400 font-semibold mt-0.5">✦ 1st try</p>
+                    <p className="text-[10px] text-teal-600 dark:text-teal-400 font-semibold">✦ 1st try</p>
                   )}
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-300 truncate pr-3">{c.field2}</p>
-                <div>
-                  {c.difficulty ? (
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold capitalize ${DIFF[c.difficulty].bg} ${DIFF[c.difficulty].text}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${DIFF[c.difficulty].dot}`} />
-                      {c.difficulty}
-                    </span>
-                  ) : <span className="text-xs text-gray-400 dark:text-gray-500">-</span>}
+                {/* Desktop layout */}
+                <div className="hidden sm:grid grid-cols-4 items-center">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate pr-3">{c.field1}</p>
+                    {parseInt(c.first_attempt_correct) > 0 && (
+                      <p className="text-[10px] text-teal-600 dark:text-teal-400 font-semibold mt-0.5">✦ 1st try</p>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 truncate pr-3">{c.field2}</p>
+                  <div>
+                    {c.difficulty ? (
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold capitalize ${DIFF[c.difficulty].bg} ${DIFF[c.difficulty].text}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${DIFF[c.difficulty].dot}`} />
+                        {c.difficulty}
+                      </span>
+                    ) : <span className="text-xs text-gray-400 dark:text-gray-500">-</span>}
+                  </div>
+                  <p className={`text-xs font-medium ${c.next_review && new Date(c.next_review) <= new Date() ? 'text-rose-600 dark:text-rose-400' : 'text-gray-600 dark:text-gray-300'}`}>
+                    {nextReviewLabel(c.next_review) || '-'}
+                  </p>
                 </div>
-                <p className={`text-xs font-medium ${c.next_review && new Date(c.next_review) <= new Date() ? 'text-rose-600 dark:text-rose-400' : 'text-gray-600 dark:text-gray-300'}`}>
-                  {nextReviewLabel(c.next_review) || '-'}
-                </p>
               </div>
             ))}
           </div>

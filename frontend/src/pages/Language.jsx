@@ -113,16 +113,16 @@ export default function Language() {
           </div>
         </div>
 
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          <div className="w-56 flex-shrink-0">
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Categories — horizontal scroll on mobile, sidebar on desktop */}
+          <div className="md:w-56 md:flex-shrink-0">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3 px-1">Categories</p>
-            <div className="flex flex-col gap-0.5">
+            <div className="flex md:flex-col gap-1 overflow-x-auto pb-1 md:pb-0 md:overflow-visible">
               {categories.map(c => (
-                <div key={c.id} className="group flex items-center gap-1">
+                <div key={c.id} className="group flex items-center gap-1 flex-shrink-0 md:flex-shrink">
                   <button
                     onClick={() => { setActiveCategory(c); setAddingEntry(false) }}
-                    className={`flex-1 text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeCategory?.id === c.id ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-900 dark:text-sky-100 font-semibold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'}`}
+                    className={`flex-1 text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap md:whitespace-normal ${activeCategory?.id === c.id ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-900 dark:text-sky-100 font-semibold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'}`}
                   >{c.name}</button>
                   {c.is_custom && (
                     <button onClick={() => deleteCategory(c.id)} className="opacity-0 group-hover:opacity-100 w-6 h-6 flex items-center justify-center text-gray-300 dark:text-gray-600 hover:text-rose-500 transition-all text-xs rounded">✕</button>
@@ -155,12 +155,12 @@ export default function Language() {
           <div className="flex-1 min-w-0">
             {activeCategory && (
               <>
-                <div className="flex items-center justify-between mb-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                   <div>
                     <h2 className="font-semibold text-gray-900 dark:text-white text-lg">{activeCategory.name}</h2>
                     <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <div className="flex rounded-lg border border-gray-200 dark:border-white/10 overflow-hidden text-xs font-semibold">
                       {[['all','All'],['learn','Learn'],['revise','Revise']].map(([v,l]) => (
                         <button key={v} onClick={() => setViewFilter(v)}
@@ -178,11 +178,13 @@ export default function Language() {
                 </div>
 
                 {addingEntry && (
-                  <form onSubmit={addEntry} className="mb-4 p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c1a2e] flex gap-3 items-center shadow-sm">
+                  <form onSubmit={addEntry} className="mb-4 p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c1a2e] flex flex-col sm:flex-row gap-3 shadow-sm">
                     <input autoFocus value={f1} onChange={e => setF1(e.target.value)} placeholder={activeCategory.field1_label} className="input-field flex-1" />
                     <input value={f2} onChange={e => setF2(e.target.value)} placeholder={activeCategory.field2_label} className="input-field flex-1" />
-                    <button type="submit" className="px-3 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold">Save</button>
-                    <button type="button" onClick={() => { setAddingEntry(false); setF1(''); setF2('') }} className="px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-sm text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5">✕</button>
+                    <div className="flex gap-2">
+                      <button type="submit" className="flex-1 sm:flex-none px-3 py-2 rounded-lg bg-brand-gradient text-white text-sm font-semibold">Save</button>
+                      <button type="button" onClick={() => { setAddingEntry(false); setF1(''); setF2('') }} className="flex-1 sm:flex-none px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-sm text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5">✕</button>
+                    </div>
                   </form>
                 )}
 

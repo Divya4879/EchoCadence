@@ -40,7 +40,7 @@ export default function AppLayout() {
   return (
     <>
       <Nav username={appUser.username} picture={user?.picture} email={user?.email} />
-      <main className="pt-[72px]">
+      <main className="pt-[64px] pb-14 sm:pb-0">
         <Outlet />
       </main>
     </>

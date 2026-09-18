@@ -10,7 +10,8 @@ const ALL_LANGUAGES = [
   'Hebrew','Hindi','Hungarian','Indonesian','Italian','Japanese','Korean',
   'Latin','Malay','Norwegian','Persian (Farsi)','Polish','Portuguese',
   'Romanian','Russian','Sanskrit','Slovak','Spanish','Swahili','Swedish',
-  'Tagalog','Thai','Turkish','Ukrainian','Urdu','Vietnamese',
+  'Tagalog','Thai','Turkish','Ukrainian','Urdu','Vietnamese','English','Tamil',
+  'Marathi','Telugu','Gujarati','Kannada','Malyalam','Bengali','Punjabi','Odia'
 ]
 
 export default function Dashboard() {
