@@ -30,9 +30,9 @@ export default function Nav({ username, picture, email }) {
     <>
       <header className="fixed top-0 inset-x-0 z-50 h-[60px] flex items-center justify-between px-4 md:px-10 backdrop-blur-xl bg-white/90 dark:bg-[#070f1c]/90 border-b border-gray-200 dark:border-white/[0.09]">
         {/* Logo */}
-        <Link to="/dashboard" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <img src="/favicon.svg" width={32} height={32} alt="EchoCadence" />
-          <span className="text-[17px] font-bold tracking-tight text-gray-900 dark:text-white">
+        <Link to="/dashboard" className="flex items-center gap-2 min-w-0" onClick={() => setOpen(false)}>
+          <img src="/favicon.svg" width={30} height={30} alt="EchoCadence" className="flex-shrink-0" />
+          <span className="text-[16px] font-bold tracking-tight text-gray-900 dark:text-white truncate">
             Echo<span className="gradient-text">Cadence</span>
           </span>
         </Link>
@@ -60,15 +60,12 @@ export default function Nav({ username, picture, email }) {
           </button>
         </div>
 
-        {/* Mobile right: theme + hamburger */}
-        <div className="flex sm:hidden items-center gap-2">
-          <button onClick={toggle} className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-300" aria-label="Toggle theme">
-            {dark ? <Sun /> : <Moon />}
-          </button>
-          <button onClick={() => setOpen(o => !o)} className="w-8 h-8 rounded-lg flex flex-col items-center justify-center gap-1.5" aria-label="Menu">
-            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all ${open ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all ${open ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all ${open ? '-rotate-45 -translate-y-2' : ''}`} />
+        {/* Mobile right: hamburger only */}
+        <div className="flex sm:hidden items-center">
+          <button onClick={() => setOpen(o => !o)} className="w-9 h-9 rounded-lg flex flex-col items-center justify-center gap-1.5" aria-label="Menu">
+            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all duration-200 ${open ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-200 transition-all duration-200 ${open ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
       </header>
@@ -92,6 +89,10 @@ export default function Nav({ username, picture, email }) {
             <button onClick={() => { localStorage.removeItem('ec_token'); logout({ logoutParams: { returnTo: window.location.origin } }) }}
               className="mt-2 px-3 py-3 rounded-xl text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 text-left transition-colors">
               Sign out
+            </button>
+            <button onClick={toggle} className="px-3 py-3 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 text-left transition-colors flex items-center gap-2">
+              {dark ? <Sun /> : <Moon />}
+              {dark ? 'Light mode' : 'Dark mode'}
             </button>
           </div>
         </div>
