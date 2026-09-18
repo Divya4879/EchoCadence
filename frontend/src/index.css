@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  #root { min-width: 320px; }
   html { scroll-behavior: smooth; }
   body { @apply antialiased; font-family: 'Plus Jakarta Sans', sans-serif; }
 }
