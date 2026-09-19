@@ -11,7 +11,7 @@ const ALL_LANGUAGES = [
   'Latin','Malay','Norwegian','Persian (Farsi)','Polish','Portuguese',
   'Romanian','Russian','Sanskrit','Slovak','Spanish','Swahili','Swedish',
   'Tagalog','Thai','Turkish','Ukrainian','Urdu','Vietnamese','English','Tamil',
-  'Marathi','Telugu','Gujarati','Kannada','Malyalam','Bengali','Punjabi','Odia'
+  'Marathi','Telugu','Gujarati','Kannada','Malayalam','Punjabi','Odia'
 ]
 
 export default function Dashboard() {
