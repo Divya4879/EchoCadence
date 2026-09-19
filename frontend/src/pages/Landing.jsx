@@ -23,7 +23,7 @@ const useCases = [
     emoji: '📚',
     title: 'Already know a language?',
     subtitle: 'Go deeper.',
-    body: 'You speak English but want to expand to advanced vocabulary, idioms, and nuanced phrases. Add them, study them, and actually retain them — not just look them up and forget.',
+    body: 'You speak English but want to expand to advanced vocabulary, idioms, and nuanced phrases. Add them, study them, and actually retain them - not just look them up and forget.',
   },
   {
     emoji: '🌍',
@@ -81,7 +81,7 @@ const steps = [
   {
     n: '02',
     title: 'Add your vocabulary',
-    desc: 'Type in words, meanings, phrases, idioms — whatever you\'re learning. Organise them into categories.',
+    desc: 'Type in words, meanings, phrases, idioms - whatever you\'re learning. Organise them into categories.',
   },
   {
     n: '03',
@@ -159,7 +159,7 @@ export default function Landing() {
             Stop looking up the same words twice.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-lg mx-auto leading-relaxed">
-            EchoCadence turns your vocabulary into flashcards and schedules reviews at exactly the right time — so what you learn today stays with you.
+            EchoCadence turns your vocabulary into flashcards and schedules reviews at exactly the right time - so what you learn today stays with you.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
             <button onClick={signup} className="px-7 py-3 rounded-xl font-semibold bg-brand-gradient text-white hover:opacity-90 glow text-sm">Start learning for free</button>
